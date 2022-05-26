@@ -47,8 +47,10 @@ def scrape_api(game_id):
                                                                        so I those cases, i'd keep
                                                                        them there)
     
-    FUTURE PROBLEM :
+    FUTURE PROBLEMS :
         - SHOOTOUTS AND PENALTY SHOTS
+        - Period 5 in REGULAR SEASON is SHOOTOUT while it's still OT in the playoffs.
+        - 
     ***
     '''
     
