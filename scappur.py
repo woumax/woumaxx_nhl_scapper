@@ -145,7 +145,10 @@ def scrape_api(game_id):
                 name = shifts_df.fullName.iloc[j]
                 playerid = shifts_df.playerId.iloc[j]
                 
-                
+                '''
+                Assuming that the maximum of skaters on each side is 7
+                *still need to review this*
+                '''
                 if  shifts_df.teamName.iloc[j] == home_team_name:
                     if shifts_df.is_goalie.iloc[j] == 1:
                         home_goalie_arr.append(name)
@@ -156,7 +159,7 @@ def scrape_api(game_id):
                         home_sktrs_arr.append(name)
                         home_id_arr.append(playerid)
                         
-                        if home_skaters == 1 :
+                        if home_skaters == 1 : 
                             home_on_1 = name
                             home_on_1_id = playerid
                             
@@ -170,6 +173,7 @@ def scrape_api(game_id):
                             home_on_5_id = np.nan
                             home_on_6 = np.nan
                             home_on_6_id = np.nan
+                            
                         elif home_skaters == 2:
                             home_on_2 = name
                             home_on_2_id = playerid
@@ -181,7 +185,8 @@ def scrape_api(game_id):
                             home_on_5 = np.nan
                             home_on_5_id = np.nan
                             home_on_6 = np.nan
-                            home_on_6_id = np.nan
+                            home_on_6_id = np.nan 
+                            
                         elif home_skaters == 3:
                             home_on_3 = name
                             home_on_3_id = playerid
@@ -192,6 +197,7 @@ def scrape_api(game_id):
                             home_on_5_id = np.nan
                             home_on_6 = np.nan
                             home_on_6_id = np.nan
+                            
                         elif home_skaters == 4:
                             home_on_4 = name
                             home_on_4_id = playerid
@@ -200,15 +206,25 @@ def scrape_api(game_id):
                             home_on_5_id = np.nan
                             home_on_6 = np.nan
                             home_on_6_id = np.nan
+                            
                         elif home_skaters == 5:
                             home_on_5 = name
                             home_on_5_id = playerid
                             
                             home_on_6 = np.nan
                             home_on_6_id = np.nan
+                            
                         elif home_skaters == 6:
                             home_on_6 = name
                             home_on_6_id = playerid
+                            
+                            home_on_7 = np.nan
+                            home_on_7_id = np.nan
+                            
+                        elif home_skaters == 7:
+                            home_on_7 = name
+                            home_on_7_id = playerid
+
                         else:
                             home_on_1 = np.nan
                             home_on_1_id = np.nan
@@ -222,7 +238,8 @@ def scrape_api(game_id):
                             home_on_5_id = np.nan
                             home_on_6 = np.nan
                             home_on_6_id = np.nan
-                            
+                            home_on_7 = np.nan
+                            home_on_7_id = np.nan
                         
         
                 else: #For away
@@ -303,172 +320,6 @@ def scrape_api(game_id):
                             away_on_6_id = np.nan
                 
                 
-                
-    # =============================================================================
-    #     for shift in shifts['data']:
-    #         if ([game_seconds] >= [(int(shift['period'])-1)*1200 + (sum(x * int(t) for x, t in zip([3600, 60, 1],
-    #                                                           shift['startTime'].split(":")))/60)]) and ([game_seconds] < [(int(shift['period'])-1)*1200 + (sum(x * int(t) for x, t in zip([3600, 60, 1],
-    #                                                                                                                                                 shift['endTime'].split(":")))/60)]):
-    #                                                                                                                                                    
-    #             name = f"{shift['firstName']} {shift['lastName']}"
-    #             playerid = shift['playerId']                                                                                                                                     
-    #             
-    #             #print(f"{name}, {playerid}")                                                                                                                                      
-    #                                                                                                                                                    
-    #             if shift['teamName'] == home_team_name:
-    #                 if playerid in game["liveData"]["boxscore"]["teams"]["home"]["goalies"]:
-    #                     home_goalie = name
-    #                     home_goalie_id = playerid
-    #                 else:
-    #                     home_skaters += 1
-    #                     home_sktrs_arr.append(name)
-    #                     home_id_arr.append(playerid)
-    #                     
-    #                     if home_skaters == 1 :
-    #                         home_on_1 = name
-    #                         home_on_1_id = playerid
-    #                         
-    #                         home_on_2 = np.nan
-    #                         home_on_2_id = np.nan
-    #                         home_on_3 = np.nan
-    #                         home_on_3_id = np.nan
-    #                         home_on_4 = np.nan
-    #                         home_on_4_id = np.nan
-    #                         home_on_5 = np.nan
-    #                         home_on_5_id = np.nan
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                     elif home_skaters == 2:
-    #                         home_on_2 = name
-    #                         home_on_2_id = playerid
-    #                         
-    #                         home_on_3 = np.nan
-    #                         home_on_3_id = np.nan
-    #                         home_on_4 = np.nan
-    #                         home_on_4_id = np.nan
-    #                         home_on_5 = np.nan
-    #                         home_on_5_id = np.nan
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                     elif home_skaters == 3:
-    #                         home_on_3 = name
-    #                         home_on_3_id = playerid
-    #                         
-    #                         home_on_4 = np.nan
-    #                         home_on_4_id = np.nan
-    #                         home_on_5 = np.nan
-    #                         home_on_5_id = np.nan
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                     elif home_skaters == 4:
-    #                         home_on_4 = name
-    #                         home_on_4_id = playerid
-    #                         
-    #                         home_on_5 = np.nan
-    #                         home_on_5_id = np.nan
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                     elif home_skaters == 5:
-    #                         home_on_5 = name
-    #                         home_on_5_id = playerid
-    #                         
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                     elif home_skaters == 6:
-    #                         home_on_6 = name
-    #                         home_on_6_id = playerid
-    #                     else:
-    #                         home_on_1 = np.nan
-    #                         home_on_1_id = np.nan
-    #                         home_on_2 = np.nan
-    #                         home_on_2_id = np.nan
-    #                         home_on_3 = np.nan
-    #                         home_on_3_id = np.nan
-    #                         home_on_4 = np.nan
-    #                         home_on_4_id = np.nan
-    #                         home_on_5 = np.nan
-    #                         home_on_5_id = np.nan
-    #                         home_on_6 = np.nan
-    #                         home_on_6_id = np.nan
-    #                         
-    #                     
-    #     
-    #             else:
-    #                 if playerid in game["liveData"]["boxscore"]["teams"]["away"]["goalies"]:
-    #                     away_goalie = name
-    #                     away_goalie_id = playerid
-    #                 else:
-    #                     away_skaters += 1
-    #                     away_sktrs_arr.append(name)
-    #                     away_id_arr.append(playerid)
-    #                     
-    #                     if away_skaters == 1 :
-    #                         away_on_1 = name
-    #                         away_on_1_id = playerid
-    #                         
-    #                         away_on_2 = np.nan
-    #                         away_on_2_id = np.nan
-    #                         away_on_3 = np.nan
-    #                         away_on_3_id = np.nan
-    #                         away_on_4 = np.nan
-    #                         away_on_4_id = np.nan
-    #                         away_on_5 = np.nan
-    #                         away_on_5_id = np.nan
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    #                     elif away_skaters == 2:
-    #                         away_on_2 = name
-    #                         away_on_2_id = playerid
-    #                         
-    #                         away_on_3 = np.nan
-    #                         away_on_3_id = np.nan
-    #                         away_on_4 = np.nan
-    #                         away_on_4_id = np.nan
-    #                         away_on_5 = np.nan
-    #                         away_on_5_id = np.nan
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    #                     elif away_skaters == 3:
-    #                         away_on_3 = name
-    #                         away_on_3_id = playerid
-    #                         
-    #                         away_on_4 = np.nan
-    #                         away_on_4_id = np.nan
-    #                         away_on_5 = np.nan
-    #                         away_on_5_id = np.nan
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    #                     elif away_skaters == 4:
-    #                         away_on_4 = name
-    #                         away_on_4_id = playerid
-    #                         
-    #                         away_on_5 = np.nan
-    #                         away_on_5_id = np.nan
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    #                     elif away_skaters == 5:
-    #                         away_on_5 = name
-    #                         away_on_5_id = playerid
-    #                         
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    #                     elif away_skaters == 6:
-    #                         away_on_6 = name
-    #                         away_on_6_id = playerid
-    #                     else:
-    #                         away_on_1 = np.nan
-    #                         away_on_1_id = np.nan
-    #                         away_on_2 = np.nan
-    #                         away_on_2_id = np.nan
-    #                         away_on_3 = np.nan
-    #                         away_on_3_id = np.nan
-    #                         away_on_4 = np.nan
-    #                         away_on_4_id = np.nan
-    #                         away_on_5 = np.nan
-    #                         away_on_5_id = np.nan
-    #                         away_on_6 = np.nan
-    #                         away_on_6_id = np.nan
-    # =============================================================================
         
     
         #Goalies
