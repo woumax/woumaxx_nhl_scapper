@@ -6,6 +6,8 @@
  
  For learning purposes.
  
+ Inspired by the work of Patrick Bacon and 	Neil Pierre-Louis.
+ 
  
  
  
