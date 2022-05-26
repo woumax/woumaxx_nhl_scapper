@@ -31,6 +31,8 @@ def scrape_api(game_id):
                     }
     
     NEED TO FIX : GOALIES SHOULD NOT BE EVENT_PLAYERS 2 AND 3 ON SHOTS EVENTS
+    
+    FUTURE PROBLEM : SHOOTOUTS AND PENALTY SHOTS
     ***
     '''
     
