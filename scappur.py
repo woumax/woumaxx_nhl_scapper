@@ -506,7 +506,10 @@ def scrape_api(game_id):
 def scrape_season(season=20212022, session="R"): #Session can be R (regular season) or P (playoffs)
 
     '''
-    The goal of the function is to scrape PBP Data for all the games in an NHL season.
+    Description : 
+        The goal of the function is to scrape PBP Data for all the games in an NHL season.
+        (When it works,)it returns a Dataframe with all the games played in the given season.
+    
     
     Issues encountered so far :
         - Does not work on (playoff) games that have not been played so far. 
