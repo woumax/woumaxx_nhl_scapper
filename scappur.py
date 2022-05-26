@@ -9,12 +9,21 @@ Created on Mon May 23 18:09:39 2022
 import requests
 import pandas as pd
 import numpy as np
-from bs4  import BeautifulSoup
-import re
 import time
 #%%
 def scrape_api(game_id):
     '''
+    Description :
+        This fuction is scraping the NHL's API for a given game (game_id).
+        It returns a Dataframe with all events of the game and a bunch of informations
+        that can be useful in Data Analysis.
+        
+        Function was built by Max Tixador, but inspired by Neil Pierre-Louis and
+        Patrick Bacon's previous work on their own scrappers. 
+        
+        The goal here is to build the Ultimate NHL scrapper in Python to make
+        my life easier when I am trying to be a successful hockey data analyst.
+    
     ***
     FEATURE THAT COULD BE COOL : FIND WHO IS IN THE PENALTY BOX WHEN EVENTS HAPPEN
     - my idea : make a list of dictionaries for each player in the penalty box
@@ -30,9 +39,16 @@ def scrape_api(game_id):
                    'player_penalized_infraction' : [why hes in the penalty box],
                     }
     
-    NEED TO FIX : GOALIES SHOULD NOT BE EVENT_PLAYERS 2 AND 3 ON SHOTS EVENTS
+    NEED TO FIX :
+        - GOALIES SHOULD NOT BE EVENT_PLAYERS 2 AND 3 ON SHOTS EVENTS (not a really big deal yet...
+                                                                       cuz... Goalies can have assists
+                                                                       on goals and they can be victims
+                                                                       of hits or penalties...
+                                                                       so I those cases, i'd keep
+                                                                       them there)
     
-    FUTURE PROBLEM : SHOOTOUTS AND PENALTY SHOTS
+    FUTURE PROBLEM :
+        - SHOOTOUTS AND PENALTY SHOTS
     ***
     '''
     
@@ -413,7 +429,7 @@ def scrape_api(game_id):
                                                   'home_team_acc' : [home_team_acc],
                                                   'away_team_name' : [away_team_name],
                                                   'away_team_acc' : [away_team_acc],
-                                                  'event_index' : [i],
+                                                  'event_index' : [events[i]['about']['eventIdx']],
                                                   'period': [events[i]['about']['period']],
                                                   'game_seconds' : [game_seconds],
                                                   'event_type' : [events[i]['result']['eventTypeId']],
@@ -475,6 +491,7 @@ def scrape_api(game_id):
                                                   'game_strength' : [game_strength]
                                                   }))
     event_df = pd.concat(event_list).reset_index(drop=True)
+        
     
     # end time
     end = time.time()
@@ -482,11 +499,11 @@ def scrape_api(game_id):
     return event_df
 
     
-a = scrape_api(2021020983)
+a = scrape_api(2021030225)
 
 
 #%%    
-game_id = 2021021035
+game_id = 2021030225
 
 # starting time
 start = time.time()
@@ -929,3 +946,43 @@ event_df = pd.concat(event_list).reset_index(drop=True)
 # end time
 end = time.time()
 print(f"Done! Runtime of scrapping is {end - start}.")
+#%%
+
+
+def scrape_season(season=20212022, session="R"): #Session can be R (regular season) or P (playoffs)
+
+    '''
+    The goal of the function is to scrape PBP Data for all the games in an NHL season.
+    
+    Issues encountered so far :
+        - Does not work on (playoff) games that have not been played so far. 
+    
+    
+    '''
+
+    #season = 20212022
+    schedule = requests.get(
+        f"https://statsapi.web.nhl.com/api/v1/schedule?season={season}&gameType={session}").json()
+    dates = schedule['dates']
+    gameIDs = []
+    for date in dates:
+        for game in date['games']:
+            gameIDs.append(game['gamePk'])
+    print(f"Preparing to scrape {len(gameIDs)} games!")
+    
+    game_dfs = []
+    for gameID in gameIDs:
+        game_df = scrape_api(gameID)
+        game_dfs.append(game_df)
+    print("Done!")
+    
+    season_df = pd.concat(game_dfs)
+    season_df = season_df.reset_index(drop=True)
+    
+    return season_df
+        
+    
+#test = scrape_season(season=20212022, session="P")        
+
+
+
