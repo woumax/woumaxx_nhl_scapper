@@ -497,7 +497,7 @@ def scrape_api(game_id):
     
     # end time
     end = time.time()
-    print(f"Done! Runtime of scrapping is {end - start}.")
+    print(f"Done! Runtime of scrapping is {end - start}.\n")
     return event_df
 
     
@@ -544,7 +544,7 @@ def scrape_season(season=20212022, session="R"): #Session can be R (regular seas
     return season_df
         
     
-#data_2122 = scrape_season(season=20212022, session="R")        
+data_2122 = scrape_season(season=20212022, session="R")        
 
 
 
