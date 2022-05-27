@@ -73,6 +73,9 @@ def scrape_api(game_id):
     
     shifts_df = pd.DataFrame(shifts['data'])
     
+    #Filter out events from the shifts_df
+    shifts_df = (shifts_df[shifts_df.eventDescription.isna()]).reset_index(drop=True)
+    
     s_time = []
     for i in range(len(shifts_df)):
         s_time.append((int(shifts_df.period.iloc[i])-1)*1200 + (sum(x * int(t) for x, t in zip([3600, 60, 1], (shifts_df.startTime.iloc[i]).split(":")))/60))
@@ -544,7 +547,7 @@ def scrape_season(season=20212022, session="R"): #Session can be R (regular seas
     return season_df
         
     
-data_2122 = scrape_season(season=20212022, session="R")        
+#data_2122 = scrape_season(season=20212022, session="R")        
 
 
 
