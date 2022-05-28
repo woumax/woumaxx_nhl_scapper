@@ -73,8 +73,12 @@ def scrape_api(game_id):
     
     shifts_df = pd.DataFrame(shifts['data'])
     
+    #Filter out shifts that last 0s
+    shifts_df = shifts_df[shifts_df.duration != '00:00']
+    
     #Filter out events from the shifts_df
     shifts_df = (shifts_df[shifts_df.eventDescription.isna()]).reset_index(drop=True)
+    
     
     s_time = []
     for i in range(len(shifts_df)):
@@ -504,7 +508,7 @@ def scrape_api(game_id):
     return event_df
 
     
-#a = scrape_api(2021030225)
+#a = scrape_api(2019020003)
 
 
 
@@ -548,6 +552,14 @@ def scrape_season(season=20212022, session="R"): #Session can be R (regular seas
         
     
 #data_2122 = scrape_season(season=20212022, session="R")        
+
+#data_2122.to_csv('data_2122.csv')
+
+
+# LAST GAME LEFT TO SCRAPE
+# data_1718 = scrape_season(season=20172018, session="R")
+# data_1718.to_csv('data_1718.csv')
+
 
 
 
